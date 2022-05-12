@@ -3,15 +3,29 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+
+mixin FirebaseAuth {
+  late User currentUser;
+
+  static FirebaseAuth instance;
+
+  signInWithCredential(AuthCredential credential) {}
+}
 final GoogleSignIn googleSignIn = GoogleSignIn();
+
+mixin GoogleSignIn {
+  signOut() {}
+}
 String name;
 String email;
 String imageUrl;
-Future<String> signInWithGoogle() async {
+Future<String?> signInWithGoogle() async {
   await Firebase.initializeApp();
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
   final GoogleSignInAuthentication googleSignInAuthentication =
       await googleSignInAccount.authentication;
+  // ignore: non_constant_identifier_names
+
   final AuthCredential credential = GoogleAuthProvider.credential(
     accessToken: googleSignInAuthentication.accessToken,
     idToken: googleSignInAuthentication.idToken,
@@ -40,6 +54,49 @@ Future<String> signInWithGoogle() async {
   }
   return null;
 }
+
+mixin User {
+  // ignore: prefer_typing_uninitialized_variables
+  var email;
+
+  // ignore: prefer_typing_uninitialized_variables
+  var displayName;
+
+  // ignore: prefer_typing_uninitialized_variables
+  var photoURL;
+
+  late bool isAnonymous;
+
+  late Object uid;
+
+  getIdToken() {}
+}
+
+mixin UserCredential {
+  var user;
+}
+
+mixin GoogleAuthProvider {
+  static AuthCredential credential({accessToken, idToken}) {}
+}
+
+mixin Firebase {
+  static initializeApp() {}
+}
+
+mixin GoogleSignInAccount {
+  get authentication => null;
+}
+
+mixin GoogleSignInAuthentication {
+  // ignore: prefer_typing_uninitialized_variables
+  var accessToken;
+
+  // ignore: prefer_typing_uninitialized_variables
+  var idToken;
+}
+
+class AuthCredential {}
 
 Future<void> signOutGoogle() async {
   await googleSignIn.signOut();

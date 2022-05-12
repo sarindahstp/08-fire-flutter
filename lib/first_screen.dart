@@ -11,11 +11,11 @@ class FirstScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
+            colors: [Colors.blue, Colors.blue],
           ),
         ),
         child: Center(
